@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>i2icell</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+.navbar-nav li a {
+	color: black !important;
+	font-weight: bold;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 615px;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #41ACE4;
+	height: 100%;
+	color: white;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #D3D3D3;
+	color: black;
+	padding: 15px;
+}
+
+.navbar-inverse {
+	background-color: #D3D3D3;
+	border-color: #D3D3D3;
+	color: black;
+}
+
+.content-form {
+	border: 1px solid #ccc;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	padding: 20px;
+}
+</style>
+<script>
+	var str="";
+	
+	function validateTc() {
+    	
+   	 var value = $("#customerTc").val(); 
+   	  var isEleven = /^[0-9]{11}$/.test(value);
+   	  var totalX = 0;
+   	  for (var i = 0; i < 10; i++) {
+   	    totalX += Number(value.substr(i, 1));
+   	  }
+   	  var isRuleX = totalX % 10 == value.substr(10,1);
+   	  var totalY1 = 0;
+   	  var totalY2 = 0;
+   	  for (var i = 0; i < 10; i+=2) {
+   	    totalY1 += Number(value.substr(i, 1));
+   	  }
+   	  for (var i = 1; i < 10; i+=2) {
+   	    totalY2 += Number(value.substr(i, 1));
+   	  }
+   	  var isRuleY = ((totalY1 * 7) - totalY2) % 10 == value.substr(9,0);
+
+   	  var res = isEleven && isRuleX && isRuleY;
+   	  if(!res){
+   		  str += "Lütfen kurallara uygun bir TC Kimlik Numarası giriniz.\n";
+   	  }
+   	}
+
+	
+	function validateEmail() {
+		var email = $("#customerEmail").val();
+		var emailRule = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!emailRule.test(email)) {
+			str += "Lütfen Kurallara uygun bir email giriniz.\n";
+		}
+	}
+
+	function validatePhone() {
+		var phone = $("#customerPhone").val(); 
+		var phoneRule = /^\d{10}$/; 
+		if (!phoneRule.test(phone)) {
+			str += "Lütfen Kurallara uygun bir telefon numarası giriniz.\n";
+		}
+	}
+	
+	function validateName(){
+		var name = $("#customerName").val(); 
+		var nameRule = /^[A-Za-z_ğüşıöçĞÜŞİÖÇ]*$/; 
+		if (!nameRule.test(name)) {
+			str += "Lütfen Kurallara uygun bir isim giriniz.\n";
+		}
+	}
+	
+	function validateSurname(){
+		var surname = $("#customerSurname").val(); 
+		var nameRule = /^[A-Za-z_ğüşıöçĞÜŞİÖÇ]*$/; 
+		if (!nameRule.test(surname)) {
+			str += "Lütfen Kurallara uygun bir soyisim giriniz.\n";
+		}
+	}
+
+	function validatePassword() {
+		var password = document.getElementById("customerPassword");
+		var lowerCaseLetters = /[a-z]/g;
+		if (!password.value.match(lowerCaseLetters)) {
+			str += "Şifrenizde en az bir tane küçük harf bulunmalıdır.\n";
+		}
+
+		var upperCaseLetters = /[A-Z]/g;
+		if (!password.value.match(upperCaseLetters)) {
+			str += "Şifrenizde en az bir tane büyük harf bulunmalıdır.\n";
+		}
+
+		var numbers = /[0-9]/g;
+		if (!password.value.match(numbers)) {
+			str += "Şifrenizde sayı ve harf bulunmalıdır.\n";
+		}
+
+		// Validate length
+		if (!(8<= password.value.length <= 12)) {
+			str += "Şifreniz en az 8 en çok 12 karakter içermelidir.\n";
+		}
+	}
+	
+	function validate() {
+		validateTc();
+		validateEmail();
+		validateName();
+		validateSurname();
+		validatePhone();
+		validatePassword();
+		if(str!=""){
+			alert(str);
+			return false;
+		}
+		
+		return true;
+	}
+</script>
+</head>
+<body>
+<script src="//code.jivosite.com/widget.js" jv-id="FqcGXo6lmT" async></script>
+	<div class="container-fluid text-center">
+		<div class="row">
+			<div class="col-sm-4 sidenav"></div>
+			<div class="col-sm-8">
+				<br>
+			</div>
+		</div>
+	</div>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header col-sm-4">
+				<ul class="nav navbar-nav navbar-left">
+					<li><img
+						src="https://a.icons8.com/TtfefVqX/wTMJyC/ade7ef70-0b01-4b58-8.png"
+						width="64px" height="64px"> <b style="font-size: 21px">i2i
+							Cell</b></li>
+				</ul>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="/i2iCell/">Anasayfa</a></li>
+					<li><a href="#">Paketler</a></li>
+					<li><a href="#">Hakkımızda</a></li>
+					<li><a href="#">Giriş</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><img src="https://a.icons8.com/TtfefVqX/3UxC4m/oval.png"
+						width="64px" height="64px"></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-4 sidenav">
+				<h1 class="display-1"
+					style="font-family: cursive; font-size: 4em; opacity: 0.5;">Hello,</h1>
+				<h3 style="font-family: cursive; font-size: 2em; opacity: 0.5;">We Do Communication.</h3>
+				<img
+					src="https://a.icons8.com/TtfefVqX/Z8tVL5/f37d0b74-e9d1-44a5-a.png"
+					height="300px" width="300px">
+			</div>
+			<div class="col-sm-8 text-left">
+				<br>
+				<div class="col-sm-3"></div>
+				<div class="rounded content-form col-sm-5">
+					<form action="/i2iCell/NewAccount" method="POST">
+						<div class="form-group">
+							<label for="exampleInputTc">TC Kimlik Numarası</label> <input
+								type="text" class="form-control"
+								id="customerTc" name="customerTc" aria-describedby="TcHelp"
+								placeholder="TC Kimlilk Numarası">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputAd">Adınız</label> <input
+								type="text" class="form-control" id="customerName"
+								name="customerName" aria-describedby="AdHelp"
+								placeholder="Adınız">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputSoyad">Soyadınız</label> <input
+								type="text" class="form-control" id="customerSurname"
+								name="customerSurname" aria-describedby="SoyadHelp"
+								placeholder="Soyadınız">
+						</div>
+						<div class="form-group">
+							<label for="exampleDogumTarihi">Doğum Tarihiniz:</label> 12
+							yaşından büyük olmalısınız.<br> <input type="date"
+								class="form-control" id="customerBDay" name="customerBDay"
+								pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[0-9]{4}"
+								aria-describedby="dogumtarihiHelp" max="2007-12-31"
+								min="1900-01-01" placeholder="Örn:20-02-2007">
+						</div>
+						<div class="form-group">
+							<label for="phone_no">Telefon Numaranız</label> <input
+								 type="tel" class="form-control" id="customerPhone"
+								name="customerPhone" placeholder="5XXXXXXXXX">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">Mail Adresiniz</label> <input
+								type="email" class="form-control" id="customerEmail"
+								name="customerEmail" placeholder="mail@ornek.com">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Şifreniz</label> <input
+								type="password" class="form-control" id="customerPassword"
+								name="customerPassword" placeholder="Şifreniz">
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary"
+								onclick="return validate();">Kaydet</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="page-footer font-small special-color-dark pt-4">
+		<div class="container">
+			<ul class="list-unstyled list-inline text-center align-middle">
+				<li class="list-inline-item"><a
+					class="btn-floating btn-tw mx-1"> <img
+						src="https://a.icons8.com/TtfefVqX/k8v5yy/icons8_twitter_100px.png"
+						width="50px" height="50px">
+				</a></li>
+				<li class="list-inline-item"><br> <span class="text">Bizi
+						Takip Edin
+						<p>@i2icell</p>
+				</span></li>
+				<li class="list-inline-item"><a
+					class="btn-floating btn-tw mx-1"> <img
+						src="https://a.icons8.com/TtfefVqX/uNNcjF/icons8_technical_sup.png"
+						width="50px" height="50px">
+				</a></li>
+				<li class="list-inline-item"><br> <span class="text">Bizi
+						Arayın
+						<p>+90(850) 346 75 76</p>
+				</span></li>
+				<li class="list-inline-item"><a
+					class="btn-floating btn-tw mx-1"> <img
+						src="https://a.icons8.com/TtfefVqX/QtTjqZ/icons8_filled_messag.png"
+						width="50px" height="50px">
+				</a></li>
+				<li class="list-inline-item"><br> <span>Bize Yazın
+						<p>info@i2i-systems.com</p>
+				</span></li>
+			</ul>
+		</div>
+		<div class="footer-copyright text-center py-3">
+			© 2019 Copyright: <a href="http://i2i-systems.com/">i2iSystem
+				Academy</a>
+		</div>
+	</footer>
+</body>
+</html>
